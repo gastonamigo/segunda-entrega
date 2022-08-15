@@ -1,21 +1,27 @@
 const productos = [
     {
         id: 1,
-        nombre: "impresora 1",
-        precio: "45000",
-        imagen: "https://picsum.photos/200",
+        nombre: "Ender 3 V2",
+        precio: "55000",
+        imagen: "./img/ender-3-V2-01.jpg",
     },
     {
         id: 2,
-        nombre: "impresora 2",
-        precio: "75000",
-        imagen: "https://picsum.photos/200",
+        nombre: "Ender 2 Pro",
+        precio: "45000",
+        imagen: "./img/ender2pro1.png",
     },
     {
         id: 3,
-        nombre: "impresora 3",
-        precio: "85000",
-        imagen: "https://picsum.photos/200",
+        nombre: "Cr10 Pro v2",
+        precio: "95000",
+        imagen: "./img/creality-cr-10-smart-pro-1.jpg",
+    },
+    {
+        id: 4,
+        nombre: "Cr5 Pro",
+        precio: "125000",
+        imagen: "./img/creality-cr-10-smart-pro-1.jpg",
     },
 ];
 const carrito = [];
@@ -37,11 +43,8 @@ const productoCarritoHTML = (producto) => {
     const texto = `
     <div class="col">
     <div class="card" style="width: 18rem;">
-    <img src="${producto.imagen}" class="card-img-top"/>
     <div class="card-body">
-    <h5 class="card-tittle">${producto.nombre}</h5>
-    <p>Precio: ${producto.precio}</p>
-    <button type="button" id="boton-${producto.id}" class="btn btn-danger">Quitar</button>
+    <h5 class="card-tittle">${producto.nombre} ---- $${producto.precio}</h5>
     </div>
     </div>
     </div>`;
@@ -59,10 +62,34 @@ const carritoDom = document.getElementById("carrito");
 for (const producto of productos) {
     const boton = document.getElementById(`boton-${producto.id}`);
     boton.addEventListener("click", () => {
-        carrito.push(producto);
-        carritoDom.innerHTML += productoCarritoHTML(producto);
+        const productoCarrito ={
+            nombre: producto.nombre,
+            imagen: producto.imagen,
+            precio: producto.precio,
+            idCompra: carrito.length,
+            id: producto.id,
+        }
+        carrito.push(productoCarrito);
+        addTocarrito ();
+       
     });
 };
+
+const addTocarrito = () => {
+    let productosCarritoHTML = "";
+    for (const producto of carrito) {
+    productosCarritoHTML += productoCarritoHTML(producto);
+    }
+    console.log(productoCarritoHTML);
+    carritoDom.innerHTML = productosCarritoHTML;
+
+    for (const producto of carrito){
+        const boton =document.getElementById(`boton-quitar-${producto.idCompra}`);
+        boton.addEventListener("click", () => {
+            carrito = carrito.filter((p) => p.idCompra != producto.idCompra);
+        });
+    }
+}
 
 
 
