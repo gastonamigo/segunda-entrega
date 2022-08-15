@@ -2,31 +2,31 @@ const productos = [
     {
         id: 1,
         nombre: "Ender 3 V2",
-        precio: "55000",
+        precio: 55000,
         imagen: "./img/ender-3-V2-01.jpg",
     },
     {
         id: 2,
         nombre: "Ender 2 Pro",
-        precio: "45000",
+        precio: 45000,
         imagen: "./img/ender2pro1.png",
     },
     {
         id: 3,
         nombre: "Cr10 Pro v2",
-        precio: "95000",
+        precio: 95000,
         imagen: "./img/creality-cr-10-smart-pro-1.jpg",
     },
     {
         id: 4,
         nombre: "Cr5 Pro",
-        precio: "125000",
+        precio: 125000,
         imagen: "./img/creality-cr-10-smart-pro-1.jpg",
     },
 ];
 const carrito = [];
-const productoHTML = (producto) => {
-    const texto = `
+const catalogoHTML = (producto) => {
+    const card = `
     <div class="col">
     <div class="card" style="width: 18rem;">
     <img src="${producto.imagen}" class="card-img-top"/>
@@ -37,10 +37,10 @@ const productoHTML = (producto) => {
     </div>
     </div>
     </div>`;
-    return texto;
+    return card;
 };
-const productoCarritoHTML = (producto) => {
-    const texto = `
+const carroHTML = (producto) => {
+    const card = `
     <div class="col">
     <div class="card" style="width: 18rem;">
     <div class="card-body">
@@ -48,11 +48,11 @@ const productoCarritoHTML = (producto) => {
     </div>
     </div>
     </div>`;
-    return texto;
+    return card;
 };
-const catalogo = document.getElementById("catalogo");
+const catalogo = document.getElementById("lista");
 for (const producto of productos) {
-    catalogo.innerHTML += productoHTML(producto);
+    catalogo.innerHTML += catalogoHTML(producto);
 }
 
 
@@ -62,34 +62,24 @@ const carritoDom = document.getElementById("carrito");
 for (const producto of productos) {
     const boton = document.getElementById(`boton-${producto.id}`);
     boton.addEventListener("click", () => {
-        const productoCarrito ={
-            nombre: producto.nombre,
-            imagen: producto.imagen,
-            precio: producto.precio,
-            idCompra: carrito.length,
-            id: producto.id,
-        }
-        carrito.push(productoCarrito);
-        addTocarrito ();
-       
+        carrito.push(producto);
+        total += producto.precio;
+        addTocarrito();
     });
 };
-
+let total = 0;
 const addTocarrito = () => {
-    let productosCarritoHTML = "";
+    let productosCarritoHTML = "";    
     for (const producto of carrito) {
-    productosCarritoHTML += productoCarritoHTML(producto);
+        productosCarritoHTML += carroHTMLL(producto);        
     }
-    console.log(productoCarritoHTML);
+    console.log(carroHTML);
     carritoDom.innerHTML = productosCarritoHTML;
-
-    for (const producto of carrito){
-        const boton =document.getElementById(`boton-quitar-${producto.idCompra}`);
-        boton.addEventListener("click", () => {
-            carrito = carrito.filter((p) => p.idCompra != producto.idCompra);
-        });
-    }
 }
+ const btnFinalizar = document.getElementById(`finalizarCompra`);
+ btnFinalizar.addEventListener("click", () => {
+    btnFinalizar.insertAdjacentHTML("beforebegin",`<p>El total de su compra es:$${total}</p>`);
+ })
 
 
 
