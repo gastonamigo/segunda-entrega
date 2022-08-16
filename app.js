@@ -1,29 +1,19 @@
-const productos = [
-    {
-        id: 1,
-        nombre: "Ender 3 V2",
-        precio: 55000,
-        imagen: "./img/ender-3-V2-01.jpg",
-    },
-    {
-        id: 2,
-        nombre: "Ender 2 Pro",
-        precio: 45000,
-        imagen: "./img/ender2pro1.png",
-    },
-    {
-        id: 3,
-        nombre: "Cr10 Pro v2",
-        precio: 95000,
-        imagen: "./img/creality-cr-10-smart-pro-1.jpg",
-    },
-    {
-        id: 4,
-        nombre: "Cr5 Pro",
-        precio: 125000,
-        imagen: "./img/creality-cr-10-smart-pro-1.jpg",
-    },
-];
+class lista {
+    constructor (id, nombre, precio, imagen){
+        this.id  = id;
+        this.nombre = nombre;
+        this.precio  = precio;
+        this.imagen = imagen;
+        
+        }
+}
+const productos = []
+
+productos.push(new lista(1, "Ender 3 v2", 55000, "./img/ender-3-V2-01.jpg"));
+productos.push(new lista(2, "Ender 2 pro", 45000, "./img/ender2pro1.png"));
+productos.push(new lista(3, "Cr10 pro v2", 95000, "./img/creality-cr-10-smart-pro-1.jpg"));
+productos.push(new lista(4, "Cr5 pro", 125000, "./img/cr5pro1.jpg"));
+
 const carrito = [];
 const catalogoHTML = (producto) => {
     const card = `
@@ -54,10 +44,7 @@ const catalogo = document.getElementById("lista");
 for (const producto of productos) {
     catalogo.innerHTML += catalogoHTML(producto);
 }
-
-
-const carritoDom = document.getElementById("carrito");
-
+const listaCarrito = document.getElementById("carrito");
 
 for (const producto of productos) {
     const boton = document.getElementById(`boton-${producto.id}`);
@@ -71,16 +58,15 @@ let total = 0;
 const addTocarrito = () => {
     let productosCarritoHTML = "";    
     for (const producto of carrito) {
-        productosCarritoHTML += carroHTMLL(producto);        
+        productosCarritoHTML += carroHTML(producto);        
     }
     console.log(carroHTML);
-    carritoDom.innerHTML = productosCarritoHTML;
+    listaCarrito.innerHTML = productosCarritoHTML;
 }
  const btnFinalizar = document.getElementById(`finalizarCompra`);
  btnFinalizar.addEventListener("click", () => {
     btnFinalizar.insertAdjacentHTML("beforebegin",`<p>El total de su compra es:$${total}</p>`);
  })
-
 
 
 
